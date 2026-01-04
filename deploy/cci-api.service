@@ -11,7 +11,8 @@ WorkingDirectory=/home/sysadmin/cci-design
 
 # Use uv to run uvicorn
 Environment="PATH=/home/sysadmin/.local/bin:/usr/local/bin:/usr/bin:/bin"
-ExecStart=/home/sysadmin/.local/bin/uv run uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+Environment="PYTHONPATH=/home/sysadmin/cci-design/src"
+ExecStart=/home/sysadmin/.local/bin/uv run uvicorn api.main:app --host 0.0.0.0 --port 8000
 
 # Environment file (contains secrets)
 EnvironmentFile=/home/sysadmin/cci-design/.env

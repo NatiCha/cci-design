@@ -31,6 +31,10 @@ jobs:
             source ~/.local/bin/env
             uv sync
 
+            echo "=== Updating systemd service ==="
+            echo "$SUDO_PASSWORD" | sudo -S cp /home/sysadmin/cci-design/deploy/cci-api.service /etc/systemd/system/cci-api.service
+            echo "$SUDO_PASSWORD" | sudo -S systemctl daemon-reload
+
             echo "=== Restarting API service ==="
             echo "$SUDO_PASSWORD" | sudo -S systemctl restart cci-api
 
