@@ -1,0 +1,16 @@
+# Cloudflare Tunnel Configuration
+# Copy this file to ~/.cloudflared/config.yml and replace <TUNNEL_ID>
+#
+# Steps to get your Tunnel ID:
+# 1. Run: cloudflared tunnel login
+# 2. Run: cloudflared tunnel create cci-api
+# 3. Copy the Tunnel ID from the output
+# 4. Replace <TUNNEL_ID> below with your actual ID
+
+tunnel: <TUNNEL_ID>
+credentials-file: /home/sysadmin/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: cci.landslidelogic.com
+    service: http://localhost:8000
+  - service: http_status:404

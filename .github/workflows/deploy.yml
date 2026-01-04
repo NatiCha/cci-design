@@ -1,0 +1,40 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy CCI API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+
+            echo "=== Pulling latest code ==="
+            cd /home/sysadmin/cci-design
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "=== Syncing dependencies ==="
+            source ~/.local/bin/env
+            uv sync
+
+            echo "=== Restarting API service ==="
+            sudo systemctl restart cci-api
+
+            echo "=== Checking service status ==="
+            sleep 3
+            sudo systemctl status cci-api --no-pager
+
+            echo "=== Deployment complete ==="

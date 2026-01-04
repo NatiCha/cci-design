@@ -1,0 +1,9 @@
+# Sudoers configuration for CCI deployment
+# Allows sysadmin to restart/manage cci-api service without password
+# This is required for GitHub Actions automated deployment
+
+sysadmin ALL=(ALL) NOPASSWD: /bin/systemctl restart cci-api
+sysadmin ALL=(ALL) NOPASSWD: /bin/systemctl start cci-api
+sysadmin ALL=(ALL) NOPASSWD: /bin/systemctl stop cci-api
+sysadmin ALL=(ALL) NOPASSWD: /bin/systemctl status cci-api
+sysadmin ALL=(ALL) NOPASSWD: /bin/systemctl daemon-reload

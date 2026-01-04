@@ -1,0 +1,21 @@
+[Unit]
+Description=Cloudflare Tunnel for CCI API
+Documentation=https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
+After=network.target
+
+[Service]
+Type=simple
+User=sysadmin
+Group=sysadmin
+ExecStart=/usr/bin/cloudflared tunnel --config /home/sysadmin/.cloudflared/config.yml run
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
