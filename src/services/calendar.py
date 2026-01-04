@@ -32,9 +32,9 @@ async def discover_time_card_calendars() -> list[dict]:
             calendars = calendars_response.value if calendars_response.value else []
 
             for calendar in calendars:
-                if calendar.name and CALENDAR_PATTERN in calendar.name:
-                    # Extract initials (e.g., "CES" from "CES TIME CARD")
-                    initials = calendar.name.replace(CALENDAR_PATTERN, "").strip().upper()
+                if calendar.name and CALENDAR_PATTERN.lower() in calendar.name.lower():
+                    # Extract initials (e.g., "CES" from "CES TIME CARD" or "CES Time Card")
+                    initials = re.sub(CALENDAR_PATTERN, "", calendar.name, flags=re.IGNORECASE).strip().upper()
                     calendars_found.append(
                         {
                             "user_id": user.id,
@@ -46,6 +46,10 @@ async def discover_time_card_calendars() -> list[dict]:
                     )
                     print(f"  Found: {calendar.name} ({user.user_principal_name})")
         except Exception as e:
+            # Silently skip users without mailboxes (service accounts, admin accounts, etc.)
+            error_code = getattr(getattr(e, "error", None), "code", None)
+            if error_code == "MailboxNotEnabledForRESTAPI":
+                continue
             print(f"  Error scanning {user.user_principal_name}: {e}")
 
     return calendars_found

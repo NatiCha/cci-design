@@ -22,8 +22,8 @@ TEMPLATES_DIR = PROJECT_ROOT / "data" / "templates"
 # EMAIL CONFIGURATION
 # =============================================================================
 
-FROM_EMAIL = "charles@landslidelogic.com"
-TO_EMAIL = "charles@landslidelogic.com"
+FROM_EMAIL = "accounting@cci-design.com"
+TO_EMAIL = "everybody@cci-design.com"
 ERROR_EMAIL = "charles.squeri@gmail.com"
 
 # =============================================================================
