@@ -1,0 +1,41 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Output (generated reports and invoices)
+output/
+
+# Database
+data/db/*.db
+!data/db/.gitkeep
+
+# Test fixtures database
+tests/fixtures/*.db
+
+# Keep directory structure
+!**/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Extras
+specs/
+docs/
+*.db
+data/db/
+data/reference/
