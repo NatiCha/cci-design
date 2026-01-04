@@ -18,6 +18,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: SUDO_PASSWORD
           script: |
             set -e
 
@@ -31,10 +32,12 @@ jobs:
             uv sync
 
             echo "=== Restarting API service ==="
-            sudo systemctl restart cci-api
+            echo "$SUDO_PASSWORD" | sudo -S systemctl restart cci-api
 
             echo "=== Checking service status ==="
             sleep 3
-            sudo systemctl status cci-api --no-pager
+            echo "$SUDO_PASSWORD" | sudo -S systemctl status cci-api --no-pager
 
             echo "=== Deployment complete ==="
+        env:
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
